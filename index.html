@@ -1,1 +1,135 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мое приложение</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .collapsible-text {
+            max-height: 1.5em; /* Approximately one line of text */
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .collapsible-text.expanded {
+            max-height: 200px; /* A large value to show full text */
+        }
+        .arrow-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .expanded .arrow-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 p-4">
+
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-xl mx-auto w-full flex flex-col md:flex-row">
+        <!-- Main Content Area -->
+        <div class="flex-1 p-6 md:p-8 flex flex-col justify-between">
+            <div>
+                <!-- Heading with green text -->
+                <div class="text-emerald-700 text-right text-3xl font-bold mb-4">
+                    اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ النَّبِيِّ الأُمِّيِّ وَعَلَىٰ آلِهِ وَسَلِّمْ تَسْلِيمًا
+                </div>
+
+                <!-- Text content -->
+                <div id="text-content" class="text-gray-800 text-sm leading-relaxed text-left font-semibold">
+                    Аллахумме салли аля Мухаммедин-ин-небиййи-л-уммиййи уе аля алихи уе селлим теслиима
+                </div>
+            </div>
+
+            <!-- Bottom information and icon -->
+            <div class="mt-8 flex justify-between items-center text-gray-600 text-sm">
+                <div class="flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                    <div id="collapsible-text" class="collapsible-text">
+                        <span>О, Аллах, благослови Мухаммед, неграмотния Пророк, и неговото семейство, и ги приветствай по най-добрия начин.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-gray-600 text-sm cursor-pointer hover:underline flex items-center justify-end" id="toggle-text-btn">
+                <svg id="arrow-down-icon" class="h-4 w-4 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Sidebar Area -->
+        <div class="w-full md:w-1/3 bg-teal-500 flex flex-col justify-between items-center p-4">
+            <!-- Counter display -->
+            <div id="counter" class="text-white text-6xl md:text-7xl lg:text-8xl font-bold p-4">
+                80
+            </div>
+
+            <!-- Top right icons, using inline SVG -->
+            <div class="absolute top-4 right-4 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+
+            <!-- Button bar at the bottom -->
+            <div class="flex flex-col space-y-4 w-full">
+                <!-- Decrease button (-) -->
+                <button id="decreaseBtn" class="bg-gray-800 bg-opacity-30 text-white p-3 rounded-full shadow-lg hover:bg-opacity-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                    </svg>
+                </button>
+                <!-- Reset button (resets to 80) -->
+                <button id="resetBtn" class="bg-gray-800 bg-opacity-30 text-white p-3 rounded-full shadow-lg hover:bg-opacity-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m15.356 2H20M20 7v5h-.582m0 0a8.001 8.001 0 01-15.356 2m15.356-2H4" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const counterElement = document.getElementById('counter');
+        const decreaseBtn = document.getElementById('decreaseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const collapsibleText = document.getElementById('collapsible-text');
+        const toggleTextBtn = document.getElementById('toggle-text-btn');
+        const arrowIcon = document.getElementById('arrow-down-icon');
+        let counterValue = 80;
+
+        function decreaseCounter() {
+            counterValue--;
+            counterElement.textContent = counterValue;
+        }
+
+        function resetCounter() {
+            counterValue = 80;
+            counterElement.textContent = counterValue;
+        }
+
+        // Initially display the counter
+        counterElement.textContent = counterValue;
+
+        // Add event listeners to the buttons
+        decreaseBtn.addEventListener('click', decreaseCounter);
+        resetBtn.addEventListener('click', resetCounter);
+
+        // Add event listener for the collapsible text
+        toggleTextBtn.addEventListener('click', () => {
+            collapsibleText.classList.toggle('expanded');
+            arrowIcon.parentElement.classList.toggle('expanded');
+        });
+    </script>
+</body>
+</html>
 
